@@ -1,10 +1,14 @@
 # autotracer
 
-Added openTracing activeSpan using continuse local storage</br>
-No need to pass the span along your code anymore.</br>
+## Active Span
 
-</br>
-Create a function decorator - to auto trace this mehod as a new span
+  Added openTracing activeSpan using continuse local storage.</br>
+  No need to pass the span along your code anymore.</br>
 
-</br>
-Created an express middleware to auto trace incoming requests
+## Decorator 
+
+ Create a function decorator - to auto trace this mehod as a new span</br>
+
+## Middleware 
+
+ Created an express middleware to auto trace incoming requests</br>
