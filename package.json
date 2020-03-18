@@ -1,6 +1,6 @@
 {
   "name": "autotracer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "autotracer for opentracing",
   "main": "./dist/index.js",
   "scripts": {
