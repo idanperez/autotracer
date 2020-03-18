@@ -3,13 +3,21 @@ import * as opentracing from 'opentracing';
 import { FORMAT_HTTP_HEADERS } from 'opentracing';
 import url from 'url';
 import uuidv4 from 'uuid/v4';
-import { tracingSession } from './InitTracer';
 import tracingConsts from './tracingConsts';
+import * as cls from 'cls-hooked';
+
 import autoSpan from './autoSpan';
 import { HookedTracer } from './HookedTracer';
 
+const tracingNamespace = cls.createNamespace(tracingConsts.clsNameSpace);
+
+
+
 type NotPromise<T> = T extends Promise<any> ? never : T;
 export default class autoTracer {
+    public static tracingSession(): cls.Namespace {
+        return tracingNamespace;
+    }
 
     public static setTag(key: string, value: any): void {
         const activeSpan = autoTracer.getActiveSpan();
@@ -36,11 +44,11 @@ export default class autoTracer {
     }
 
     public static autoTraceAsyncFunction(functionName: string, childOf: boolean = true) {
-        return function(this: any, _target: object, _propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<(...params: any[]) => Promise<any>>) {
+        return function (this: any, _target: object, _propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<(...params: any[]) => Promise<any>>) {
             const functionValue = descriptor.value;
-            descriptor.value = function(...params) {
+            descriptor.value = function (...params) {
                 const context = this;
-                return tracingSession().runAndReturn(async () => {
+                return autoTracer.tracingSession().runAndReturn(async () => {
                     const spanData = autoTracer.startNewSpan(functionName, childOf);
                     let functionResult: any;
                     try {
@@ -60,9 +68,9 @@ export default class autoTracer {
         return function <T>(this: any, _target: object, _propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<(...params: any[]) => NotPromise<T>>) {
 
             const functionValue = descriptor.value;
-            descriptor.value = function(...params) {
+            descriptor.value = function (...params) {
                 const context = this;
-                return tracingSession().runAndReturn(() => {
+                return autoTracer.tracingSession().runAndReturn(() => {
                     const spanData = autoTracer.startNewSpan(functionName, childOf);
                     let functionResult: any;
                     try {
@@ -85,7 +93,7 @@ export default class autoTracer {
             return null;
         }
 
-        const session = tracingSession();
+        const session = autoTracer.tracingSession();
         const activeSpanData = session.get(tracingConsts.activeSpan) as autoSpan;
         const activeSpan: opentracing.SpanContext = activeSpanData ? activeSpanData.context() : null;
         const spanToFollow = parentSpan || activeSpan;
@@ -124,7 +132,7 @@ export default class autoTracer {
             return next();
         }
 
-        const session = tracingSession();
+        const session = autoTracer.tracingSession();
         session.run(() => {
             let autoSpan: autoSpan;
             if (req.headers['uber-trace-id'] === undefined) {
@@ -158,7 +166,7 @@ export default class autoTracer {
     }
 
     private static getActiveSpanData(): HookedTracer {
-        const session = tracingSession();
+        const session = autoTracer.tracingSession();
         const activeSpanData = session.get(tracingConsts.activeSpan) as HookedTracer;
 
         return activeSpanData;

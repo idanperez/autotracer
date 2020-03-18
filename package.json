@@ -1,10 +1,13 @@
 {
   "name": "autotracer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "autotracer for opentracing",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "test"
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run build",
+    "demo": "ts-node demo.ts"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,9 @@
     "jaeger-client": "^3.17.2",
     "opentracing": "^0.14.4",
     "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.1.0"
   }
 }

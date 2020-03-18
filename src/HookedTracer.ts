@@ -1,7 +1,7 @@
 import * as opentracing from 'opentracing';
-import { tracingSession } from './InitTracer';
 import tracingConsts from './tracingConsts';
 import autoSpan from './autoSpan';
+import { autoTracer } from '..';
 
 export class HookedTracer implements autoSpan {
     public id: string;
@@ -12,7 +12,7 @@ export class HookedTracer implements autoSpan {
         return this._span;
     }
     public finish() {
-        const session = tracingSession();
+        const session = autoTracer.tracingSession();
         const fatherSpanData: HookedTracer = this._fatherId ? session.get(this._fatherId) : null as HookedTracer;
         this._span.finish();
 
