@@ -1,0 +1,26 @@
+{
+  "name": "autotracer",
+  "version": "0.0.1",
+  "description": "autotracer for opentracing",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idanperez/autotracer.git"
+  },
+  "author": "idan perez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/idanperez/autotracer/issues"
+  },
+  "homepage": "https://github.com/idanperez/autotracer#readme",
+  "dependencies": {
+    "cls-hooked": "^4.2.2",
+    "express": "^4.17.1",
+    "jaeger-client": "^3.17.2",
+    "opentracing": "^0.14.4",
+    "url": "^0.11.0"
+  }
+}
