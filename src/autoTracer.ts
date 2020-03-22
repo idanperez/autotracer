@@ -12,7 +12,6 @@ import { HookedTracer } from './HookedTracer';
 const tracingNamespace = cls.createNamespace(tracingConsts.clsNameSpace);
 
 
-
 type NotPromise<T> = T extends Promise<any> ? never : T;
 export default class autoTracer {
     public static tracingSession(): cls.Namespace {
@@ -123,6 +122,7 @@ export default class autoTracer {
         const activeSpanData = autoTracer.getActiveSpanData();
         return activeSpanData;
     }
+
     private static middlewareLogic(req: express.Request, _res: express.Response, next: express.NextFunction, spanName: string = null) {
         const overrideOpName = spanName === null;
         spanName = spanName !== null ? spanName : url.parse(req.url).pathname;
