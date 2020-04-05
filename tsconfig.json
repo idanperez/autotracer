@@ -57,7 +57,11 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
   "include":[
-    "**/**.ts",
-    "types/express.ts"
+    "src/**.ts",
+    "types/express.ts",
+    "index.ts"
   ],
+  "exclude": [
+    "dist"
+  ]
 }

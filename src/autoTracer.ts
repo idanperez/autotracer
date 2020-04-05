@@ -3,11 +3,11 @@ import * as opentracing from 'opentracing';
 import { FORMAT_HTTP_HEADERS } from 'opentracing';
 import url from 'url';
 import uuidv4 from 'uuid/v4';
-import tracingConsts from './tracingConsts';
+import tracingConsts from './tracing-consts';
 import * as cls from 'cls-hooked';
 
 import autoSpan from './autoSpan';
-import { HookedTracer } from './HookedTracer';
+import { HookedTracer } from './hooked-tracer';
 
 const tracingNamespace = cls.createNamespace(tracingConsts.clsNameSpace);
 

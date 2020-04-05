@@ -1,8 +1,8 @@
 import jaeger, { TracingConfig, TracingOptions } from 'jaeger-client';
 import * as opentracing from 'opentracing';
-import TracingSettings from './TracingSettings';
+import TracingSettings from './tracing-settings';
 
-export default function getJaegerTracer(settings: TracingSettings): opentracing.Tracer {
+export default function initJaegerTracer(settings: TracingSettings): opentracing.Tracer {
     const tracingConfig: TracingConfig = {
         sampler: {
             type: 'const',
