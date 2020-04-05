@@ -1,7 +1,7 @@
 import * as opentracing from 'opentracing';
-import tracingConsts from './tracingConsts';
+import tracingConsts from './tracing-consts';
 import autoSpan from './autoSpan';
-import { autoTracer } from '..';
+import autoTracer from './autoTracer';
 
 export class HookedTracer implements autoSpan {
     public id: string;
